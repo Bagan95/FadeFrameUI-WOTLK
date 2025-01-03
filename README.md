@@ -1,6 +1,6 @@
 # FadeFrameUI
 Lightweight addon that changes the transparency of the player frame, pet frame, minimap, action bars, chat buttons and buff icons based on the following conditions:    
-- Out of combat, no target and full health/mana
+- Out of combat, no target, not casting and full health
 
 This addon will hopefully make you more immersed in to the game and also prevent burn in on OLED-monitors. 
 
@@ -26,7 +26,7 @@ Make sure the addon folder you just downloaded is named FadeFrameUI and not Fade
 Should look like this: "\Interface\AddOns\FadeFrameUI"
 
 ## Supported Addons
-This addon support and recommend [nibChatTabs](https://www.wowinterface.com/downloads/info16899-nibChatTabs.html)
+This addon support and recommends [nibChatTabs](https://www.wowinterface.com/downloads/info16899-nibChatTabs.html)
 
 By downloadning this addon and changing the nibChatTabs.toc to "## Interface: 30300" (instead of "## Interface: 50200")
 Without quates.
@@ -37,4 +37,4 @@ You are able to complely hide the chat tabs.
 None to be found yet.
 
 ## Other Information
-Works on World of Warcraft version 3.3.5
+Works on World of Warcraft version 3.3.5 Wotlk, that includes Warmane Onyxia server that is currently in TBC state.
