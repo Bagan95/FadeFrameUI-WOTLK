@@ -6,16 +6,16 @@ This addon will hopefully make you more immersed in to the game and also prevent
 
 # This is 20% (default) transparency.
 
-![20%](https://i.imgur.com/ic155H3.jpeg)
+![20%](https://i.imgur.com/2Cll38x.jpeg)
 
 
 # This is 100% (default) transparency.
 
-![100%](https://i.imgur.com/PdUJXwK.jpeg)
+![100%](https://i.imgur.com/uTnwaFE.jpeg)
 
 
 # How To Download And Install The Addon
-Press on the green button "<> Code" top right corner or press directly here [Download](https://github.com/Bagan95/FadeFrameUI/archive/refs/heads/main.zip)
+Press on the green button "<> Code" top right corner or press directly here [Download](https://github.com/Bagan95/FadeFrameUI-WOTLK/archive/refs/heads/main.zip)
 
 Under "Local" press on "Download ZIP"
 
