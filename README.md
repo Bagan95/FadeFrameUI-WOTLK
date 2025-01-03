@@ -37,4 +37,4 @@ You are able to complely hide the chat tabs. (this is absolutely not mandatory, 
 None to be found yet.
 
 ## Other Information
-Works on World of Warcraft version 3.3.5 Wotlk, that includes Warmane Onyxia server that is currently in TBC state.
+Works on World of Warcraft version 3.3.5 WOTLK (Wrath of the Lich King), that includes Warmane Onyxia server that is currently in TBC state.
