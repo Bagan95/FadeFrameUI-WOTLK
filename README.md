@@ -1,4 +1,4 @@
-# FadeFrameUI
+# FadeFrameUI - WOTLK 3.3.5
 Lightweight addon that changes the transparency of the player frame, pet frame, minimap, action bars, chat buttons and buff icons based on the following conditions:    
 - Out of combat, no target, not casting and full health
 
