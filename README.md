@@ -31,7 +31,7 @@ This addon support and recommends [nibChatTabs](https://www.wowinterface.com/dow
 By downloadning this addon and changing the nibChatTabs.toc to "## Interface: 30300" (instead of "## Interface: 50200")
 Without quates.
 
-You are able to complely hide the chat tabs.
+You are able to complely hide the chat tabs. (this is absolutely not mandatory, you can skip this step)
 
 ## Not Supported Addon
 None to be found yet.
