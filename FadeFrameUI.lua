@@ -1,3 +1,4 @@
+-- Define the default opacity values
 local fadeTime = 1  -- Time in seconds for the fade effect
 local opacityNonCombatActionBars = 0.5  -- Opacity for action bars when not in combat
 local opacityNonCombatUI = 0.2  -- Opacity for other UI elements when not in combat
@@ -7,6 +8,8 @@ local opacityNonTarget = 0.2  -- Opacity when the player has no target
 local opacityNotFullHealth = 1.0 -- Opacity when not at full health
 local opacityFullHealth = 0.2 -- Opacity when at full health
 local opacityCasting = 1.0 -- Opacity when the player is casting
+
+local opacityMainActionBar = 0.2  -- Default 20% opacity for the Main Action Bar
 
 local isCasting = false -- Track if the player is casting
 
@@ -46,12 +49,12 @@ local function FadeActionBars()
     -- Fade the Main Action Bar (MainMenuBar and its related frames)
     local mainActionBar = _G["MainMenuBar"]
     if mainActionBar then
-        FadeFrame(mainActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
+        FadeFrame(mainActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityMainActionBar)
     end
     
     local mainActionBarArt = _G["MainMenuBarArtFrame"]
     if mainActionBarArt then
-        FadeFrame(mainActionBarArt, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
+        FadeFrame(mainActionBarArt, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityMainActionBar)
     end
     
     -- Fade the Action Buttons (ActionButton1 to ActionButton12)
@@ -244,6 +247,45 @@ end)
 -- Register the OnUpdate handler for continuous casting check
 frame:SetScript("OnUpdate", OnUpdate)
 
+SLASH_FFU1 = "/ffu"
+SlashCmdList["FFU"] = function(msg)
+    local command, target, value = strsplit(" ", msg)
+    
+    -- Check if the value ends with '%' and remove it
+    if value and value:match("%%$") then
+        value = value:sub(1, -2)  -- Remove the '%' character
+    end
+    
+    value = tonumber(value)
+    
+    if command == "change" and target == "mainbar" and value and value >= 1 and value <= 100 then
+        opacityMainActionBar = value / 100  -- Convert 1-100 to 0-1
+        FadeActionBars()
+        print("|cff00ff00Main Action Bar|r opacity is now set to |cff00ff00" .. value .. "%\n")  -- Provide feedback with newline
+    elseif command == "reset" then
+        -- Default behavior is to reset the mainbar opacity
+        opacityMainActionBar = 0.2  -- Set to 20% opacity
+        FadeActionBars()
+        print("All settings are now |cff00ff00default|r\n")  -- Provide feedback with newline
+    else
+        print("|cff00ff00Usage and available commands:|r \n")
+        print("/ffu change mainbar <value> (value between 1 and 100).\n")
+        print("/ffu reset (default settings).\n")
+    end
+end
+
+
+
+
+
+
+
+
+
+
 -- Initial fade to set the correct opacity when the addon is loaded
 FadeActionBars()
 FadeNonActionBarUI()
+
+-- Print a message when the addon is loaded
+print("|cff00ff00FadeFrameUI|r is now loaded. Please use |cff00ff00/ffu|r to see more.")

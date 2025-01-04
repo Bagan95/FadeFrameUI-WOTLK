@@ -1,6 +1,6 @@
 ## Interface: 30300
 ## Title: FadeFrameUI
-## Notes: Immersive and OLED-safe addon that fades the UI after a few seconds when not in combat, targeting, casting or having full health - /ffu command
+## Notes: Immersive and OLED-safe addon that fades the UI after a few seconds when not in combat, targeting, casting or having full health
 ## Author: Bagan95
 ## Version: 1.0.0
 
