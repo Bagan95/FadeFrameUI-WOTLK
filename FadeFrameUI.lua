@@ -258,7 +258,7 @@ SlashCmdList["FFU"] = function(msg)
     
     value = tonumber(value)
     
-    if command == "change" and target == "mainbar" and value and value >= 1 and value <= 100 then
+    if command == "set" and target == "mainbar" and value and value >= 1 and value <= 100 then
         opacityMainActionBar = value / 100  -- Convert 1-100 to 0-1
         FadeActionBars()
         print("|cff00ff00Main Action Bar|r opacity is now set to |cff00ff00" .. value .. "%\n")  -- Provide feedback with newline
@@ -269,7 +269,7 @@ SlashCmdList["FFU"] = function(msg)
         print("All settings are now |cff00ff00default|r\n")  -- Provide feedback with newline
     else
         print("|cff00ff00Usage and available commands:|r \n")
-        print("/ffu change mainbar <value> (value between 1 and 100).\n")
+        print("/ffu set mainbar <value> (value between 1 and 100).\n")
         print("/ffu reset (default settings).\n")
     end
 end
