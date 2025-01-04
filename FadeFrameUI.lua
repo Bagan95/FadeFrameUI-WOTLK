@@ -52,11 +52,6 @@ local function FadeActionBars()
         FadeFrame(mainActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityMainActionBar)
     end
     
-    local mainActionBarArt = _G["MainMenuBarArtFrame"]
-    if mainActionBarArt then
-        FadeFrame(mainActionBarArt, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityMainActionBar)
-    end
-    
     -- Fade the Action Buttons (ActionButton1 to ActionButton12)
     for i = 1, 12 do
         local actionButton = _G["ActionButton" .. i]
