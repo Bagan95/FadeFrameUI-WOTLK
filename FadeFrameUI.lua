@@ -256,18 +256,39 @@ SlashCmdList["FFU"] = function(msg)
     if command == "set" and target == "mainbar" and value and value >= 1 and value <= 100 then
         opacityMainActionBar = value / 100  -- Convert 1-100 to 0-1
         FadeActionBars()
-        print("|cff00ff00Main Action Bar|r opacity is now set to |cff00ff00" .. value .. "%\n")  -- Provide feedback with newline
+        print("|cff00ff00Mainbar|r opacity is now set to |cff00ff00" .. value .. "%\n")  -- Provide feedback with newline
+        
+    elseif command == "set" and target == "otherbars" and value and value >= 1 and value <= 100 then
+        -- Apply scaling: If value is 20, it becomes 50% opacity
+        local scaledOpacity = value * 2.5 / 100  -- Scales 20 to 50, 40 to 100, etc.
+        opacityNonCombatActionBars = scaledOpacity  -- Set the opacity based on the scaled value
+        FadeActionBars()  -- You can create a separate function for fading non-combat action bars if necessary
+        print("|cff00ff00Otherbars|r opacity is now set to |cff00ff00" .. value .. "%\n")  -- Print the user's input value
+        
     elseif command == "reset" then
         -- Default behavior is to reset the mainbar opacity
         opacityMainActionBar = 0.2  -- Set to 20% opacity
+        opacityNonCombatActionBars = 0.5  -- Set non-combat action bar opacity to 50%
         FadeActionBars()
         print("All settings are now |cff00ff00default|r\n")  -- Provide feedback with newline
+    
+    elseif command == "save" then
+        -- Print the save message in red
+        print("|cffff0000Save is not possible at the moment. Make sure to use a macro to force the opacity you want everytime you load the game. Sorry for the inconvenience|r")
+    
     else
         print("|cff00ff00Usage and available commands:|r \n")
         print("/ffu set mainbar <value> (value between 1 and 100).\n")
+        print("/ffu set otherbars <value> (value between 1 and 100).\n")
         print("/ffu reset (default settings).\n")
+        print("/ffu save (save settings message).\n")
     end
 end
+
+
+
+
+
 
 
 
