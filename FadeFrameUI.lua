@@ -260,7 +260,7 @@ SlashCmdList["FFU"] = function(msg)
         
     elseif command == "set" and target == "otherbars" and value and value >= 1 and value <= 100 then
         -- Apply scaling: If value is 20, it becomes 50% opacity
-        local scaledOpacity = value * 2.5 / 100  -- Scales 20 to 50, 40 to 100, etc.
+        local scaledOpacity = value * 1.3 / 100  -- Scales 20 to 50, 40 to 100, etc.
         opacityNonCombatActionBars = scaledOpacity  -- Set the opacity based on the scaled value
         FadeActionBars()  -- You can create a separate function for fading non-combat action bars if necessary
         print("|cff00ff00Otherbars|r opacity is now set to |cff00ff00" .. value .. "%\n")  -- Print the user's input value
