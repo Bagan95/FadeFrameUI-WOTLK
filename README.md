@@ -26,12 +26,14 @@ Make sure the addon folder you just downloaded is named **FadeFrameUI** and not 
 Should look like this: "\Interface\AddOns\FadeFrameUI"
 
 ## Supported Addons
-This addon support and recommends [nibChatTabs](https://www.wowinterface.com/downloads/info16899-nibChatTabs.html)
+
+This addon support and recommends [FadeFrameUIParty](https://github.com/Bagan95/FadeFrameUIParty)
+If you want the party frame to have transparency mode changed on health condition.
+
+This addon also support and recommends [nibChatTabs](https://www.wowinterface.com/downloads/info16899-nibChatTabs.html)
 
 By downloadning this addon and changing the nibChatTabs.toc to "## Interface: 30300" (instead of "## Interface: 50200")
-Without quates.
-
-You are able to complely hide the chat tabs. (this is absolutely not mandatory, you can skip this step)
+Without quates. You are able to complely hide the chat tabs. (this is absolutely not mandatory, you can skip this step)
 
 ## Usage
 Use the command " /ffu "
