@@ -1,7 +1,10 @@
 -- Define the default opacity values
 local fadeTime = 1  -- Time in seconds for the fade effect
-local opacityNonCombatActionBars = 0.5  -- Opacity for action bars when not in combat
-local opacityNonCombatUI = 0.2  -- Opacity for other UI elements when not in combat
+local AllActionBars = 0.2  -- Opacity for action bars when not in combat
+local opacityNonCombatUI = 1  -- Opacity for other UI elements when not in combat
+local opacityNonCombatMinimap = 1  -- Opacity for the minimap elements when not in combat
+local opacityNonCombatPlayerFrame = 1  -- Opacity for the Playerframe elements when not in combat
+local opacityNonCombatChat = 1  -- Opacity for the Chat elements when not in combat
 local opacityInCombat = 1.0  -- Opacity when in combat
 local opacityWithTarget = 1.0  -- Opacity when the player has a target
 local opacityNonTarget = 0.2  -- Opacity when the player has no target
@@ -9,7 +12,10 @@ local opacityNotFullHealth = 1.0 -- Opacity when not at full health
 local opacityFullHealth = 0.2 -- Opacity when at full health
 local opacityCasting = 1.0 -- Opacity when the player is casting
 
-local opacityMainActionBar = 0.2  -- Default 20% opacity for the Main Action Bar
+local opacityNonCombatUI = 0.2  -- Default 20% opacity for the Main Action Bar
+local opacityNonCombatMinimap = 0.2  -- Default 20% opacity for the Minimap
+local opacityNonCombatPlayerFrame = 0.2  -- Default 20% opacity for the Playerframe
+local opacityNonCombatChat = 0.2  -- Default 20% opacity for the Chat
 
 local isCasting = false -- Track if the player is casting
 
@@ -31,9 +37,12 @@ local function FadeFrame(frame, isInCombat, hasTarget, isNotFullHealth, isCastin
     
     -- If the current opacity is not the target opacity, fade the frame
     if currentOpacity ~= targetOpacity then
-        -- If entering combat, acquiring a target, or casting, apply instant opacity change
-        if isInCombat or hasTarget or isNotFullHealth or isCasting then
-            frame:SetAlpha(targetOpacity)
+        -- Cancel any ongoing fade if acquiring a target
+        if hasTarget then
+            UIFrameFadeRemoveFrame(frame) -- Cancel any ongoing fade
+            frame:SetAlpha(targetOpacity) -- Instantly apply the target opacity
+        elseif isInCombat or isNotFullHealth or isCasting then
+            frame:SetAlpha(targetOpacity) -- Instantly apply the target opacity
         else
             UIFrameFadeOut(frame, fadeTime, currentOpacity, targetOpacity)
         end
@@ -49,92 +58,35 @@ local function FadeActionBars()
     -- Fade the Main Action Bar (MainMenuBar and its related frames)
     local mainActionBar = _G["MainMenuBar"]
     if mainActionBar then
-        FadeFrame(mainActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityMainActionBar)
+        FadeFrame(mainActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, AllActionBars)
     end
     
-    -- Fade the Action Buttons (ActionButton1 to ActionButton12)
-    for i = 1, 12 do
-        local actionButton = _G["ActionButton" .. i]
-        if actionButton then
-            FadeFrame(actionButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
-        end
-    end
-    
-    -- Fade the MultiBarRight (Right Action Bar)
-    local rightActionBar = _G["MultiBarRight"]
-    if rightActionBar then
-        FadeFrame(rightActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
-    end
-    
-    -- Fade the Action Buttons for MultiBarRight (MultiBarRightButton1 to MultiBarRightButton12)
-    for i = 1, 12 do
-        local button = _G["MultiBarRightButton" .. i]
-        if button then
-            FadeFrame(button, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
-        end
-    end
-    
-    -- Fade the MultiBarRight2 (Right Action Bar 2)
-    local rightActionBar2 = _G["MultiBarRight2"]
-    if rightActionBar2 then
-        FadeFrame(rightActionBar2, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
-    end
-    
-    -- Fade the Action Buttons for MultiBarRight2 (MultiBarRight2Button1 to MultiBarRight2Button12)
-    for i = 1, 12 do
-        local button = _G["MultiBarRight2Button" .. i]
-        if button then
-            FadeFrame(button, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
-        end
-    end
     
     -- Fade the MultiBarBottomLeft (Bottom Left Action Bar)
     local bottomLeftActionBar = _G["MultiBarBottomLeft"]
     if bottomLeftActionBar then
-        FadeFrame(bottomLeftActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
+        FadeFrame(bottomLeftActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, AllActionBars)
     end
     
-    -- Fade the Action Buttons for MultiBarBottomLeft (MultiBarBottomLeftButton1 to MultiBarBottomLeftButton12)
-    for i = 1, 12 do
-        local button = _G["MultiBarBottomLeftButton" .. i]
-        if button then
-            FadeFrame(button, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
-        end
-    end
     
     -- Fade the MultiBarBottomRight (Bottom Right Action Bar)
     local bottomRightActionBar = _G["MultiBarBottomRight"]
     if bottomRightActionBar then
-        FadeFrame(bottomRightActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
+        FadeFrame(bottomRightActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, AllActionBars)
     end
-    
-    -- Fade the Action Buttons for MultiBarBottomRight (MultiBarBottomRightButton1 to MultiBarBottomRightButton12)
-    for i = 1, 12 do
-        local button = _G["MultiBarBottomRightButton" .. i]
-        if button then
-            FadeFrame(button, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
-        end
+	
+	    -- Fade the MultiBarRight (Bottom Right Action Bar)
+    local bottomRightActionBar = _G["MultiBarRight"]
+    if bottomRightActionBar then
+        FadeFrame(bottomRightActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, AllActionBars)
     end
-    
+	   
     -- Fade the MultiBarLeft (Left Action Bar)
     local leftActionBar = _G["MultiBarLeft"]
     if leftActionBar then
-        FadeFrame(leftActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
+        FadeFrame(leftActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, AllActionBars)
     end
     
-    -- Fade the Action Buttons for MultiBarLeft (MultiBarLeftButton1 to MultiBarLeftButton12)
-    for i = 1, 12 do
-        local button = _G["MultiBarLeftButton" .. i]
-        if button then
-            FadeFrame(button, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
-        end
-    end
-    
-    -- Fade the Pet Action Bar (PetActionBarFrame)
-    local petActionBar = _G["PetActionBarFrame"]
-    if petActionBar then
-        FadeFrame(petActionBar, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatActionBars)
-    end
 end
 
 -- Function to fade non-action bar UI elements
@@ -144,7 +96,7 @@ local function FadeNonActionBarUI()
     local isNotFullHealth = UnitHealth("player") < UnitHealthMax("player")
     
     -- Fade the PlayerFrame
-    FadeFrame(PlayerFrame, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatUI)
+    FadeFrame(PlayerFrame, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatPlayerFrame)
     
     -- Fade the Minimap
     FadeFrame(Minimap, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatUI)
@@ -181,13 +133,13 @@ local function FadeNonActionBarUI()
     -- Fade the ChatFrameMenuButton (Chat menu button)
     local chatMenuButton = _G["ChatFrameMenuButton"]
     if chatMenuButton then
-        FadeFrame(chatMenuButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatUI)
+        FadeFrame(chatMenuButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatChat)
     end
     
     -- Fade the Friends Micro Button (Social Button next to the chat)
     local friendsMicroButton = _G["FriendsMicroButton"]
     if friendsMicroButton then
-        FadeFrame(friendsMicroButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatUI)
+        FadeFrame(friendsMicroButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatChat)
     end
     
     -- Fade the Chat Arrows
@@ -202,13 +154,13 @@ local function FadeNonActionBarUI()
                 
                 -- Fade the chat buttons (up, down, and bottom)
                 if upButton then
-                    FadeFrame(upButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatUI)
+                    FadeFrame(upButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatChat)
                 end
                 if downButton then
-                    FadeFrame(downButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatUI)
+                    FadeFrame(downButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatChat)
                 end
                 if bottomButton then
-                    FadeFrame(bottomButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatUI)
+                    FadeFrame(bottomButton, isInCombat, hasTarget, isNotFullHealth, isCasting, opacityNonCombatChat)
                 end
             end
         end
@@ -253,51 +205,50 @@ SlashCmdList["FFU"] = function(msg)
     
     value = tonumber(value)
     
-    if command == "set" and target == "mainbar" and value and value >= 1 and value <= 100 then
-        opacityMainActionBar = value / 100  -- Convert 1-100 to 0-1
-        FadeActionBars()
-        print("|cff00ff00Mainbar|r opacity is now set to |cff00ff00" .. value .. "%\n")  -- Provide feedback with newline
+    if command == "set" and target == "minimap" and value and value >= 1 and value <= 100 then
+        opacityNonCombatUI = value / 100  -- Convert 1-100 to 0-1
+        FadeNonActionBarUI()  -- Trigger fade for non-action bar UI
+        print("|cff00ff00Minimap|r opacity is now set to |cff00ff00" .. value .. "%\n") 
         
-    elseif command == "set" and target == "otherbars" and value and value >= 1 and value <= 100 then
-        -- Apply scaling: If value is 20, it becomes 50% opacity
-        local scaledOpacity = value * 1.3 / 100  -- Scales 20 to 50, 40 to 100, etc.
-        opacityNonCombatActionBars = scaledOpacity  -- Set the opacity based on the scaled value
-        FadeActionBars()  -- You can create a separate function for fading non-combat action bars if necessary
-        print("|cff00ff00Otherbars|r opacity is now set to |cff00ff00" .. value .. "%\n")  -- Print the user's input value
+    elseif command == "set" and target == "actionbars" and value and value >= 1 and value <= 100 then
+        AllActionBars = value / 100  -- Convert 1-100 to 0-1
+        FadeActionBars()  -- Trigger fade for action bars
+        print("|cff00ff00ActionBars|r opacity is now set to |cff00ff00" .. value .. "%\n")
+		
+	elseif command == "set" and target == "playerframe" and value and value >= 1 and value <= 100 then
+        opacityNonCombatPlayerFrame = value / 100  -- Convert 1-100 to 0-1
+        FadeNonActionBarUI()   -- Trigger fade for action bars
+        print("|cff00ff00Playerframe|r opacity is now set to |cff00ff00" .. value .. "%\n")
+		
+	elseif command == "set" and target == "chat" and value and value >= 1 and value <= 100 then
+        opacityNonCombatChat = value / 100  -- Convert 1-100 to 0-1
+        FadeNonActionBarUI()   -- Trigger fade for action bars
+        print("|cff00ff00Chat|r opacity is now set to |cff00ff00" .. value .. "%\n")
         
     elseif command == "reset" then
-        -- Default behavior is to reset the mainbar opacity
-        opacityMainActionBar = 0.2  -- Set to 20% opacity
-        opacityNonCombatActionBars = 0.5  -- Set non-combat action bar opacity to 50%
+        -- Reset all to default values
+        opacityNonCombatUI = 0.2
+        AllActionBars = 0.2
+		opacityNonCombatPlayerFrame = 0.2
+		opacityNonCombatMinimap = 0.2
+		opacityNonCombatChat = 0.2
         FadeActionBars()
-        print("All settings are now |cff00ff00default|r\n")  -- Provide feedback with newline
+        FadeNonActionBarUI()
+        print("All settings are now |cff00ff00default|r\n") 
     
     elseif command == "save" then
-        -- Print the save message in red
-        print("|cffff0000Save is not possible at the moment. Make sure to use a macro to force the opacity you want everytime you load the game. Sorry for the inconvenience|r")
+        print("|cffff0000Save is not possible at the moment. Use a macro to set opacity each time you load the game.|r")
     
     else
         print("|cff00ff00Usage and available commands:|r \n")
-        print("/ffu set mainbar <value> (value between 1 and 100).\n")
-        print("/ffu set otherbars <value> (value between 1 and 100).\n")
+        print("/ffu set minimap <value> (value between 1 and 100).\n")
+        print("/ffu set actionbars <value> (value between 1 and 100).\n")
+		print("/ffu set playerframe <value> (value between 1 and 100).\n")
+		print("/ffu set chat <value> (value between 1 and 100).\n")
         print("/ffu reset (default settings).\n")
         print("/ffu save (save settings message).\n")
     end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 -- Initial fade to set the correct opacity when the addon is loaded
 FadeActionBars()
